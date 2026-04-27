@@ -1,77 +1,97 @@
-# Mon Chatbot IA pour Restaurants
+# 🍽 Chatbot IA pour Restaurants
 
-Salut ! C'est un projet que j'ai fait pour apprendre à connecter une IA à une vraie application web. L'idée c'est simple : créer un petit widget de chat qu'un restaurant peut coller sur son site avec une seule ligne de code, et qui répond automatiquement aux questions des clients (horaires, menu, réservations, etc.).
-
-Le truc cool c'est que c'est multi-clients — un seul serveur peut gérer plusieurs restaurants, chacun avec sa propre config.
+Un assistant virtuel intelligent que tu peux intégrer sur n'importe quel site web avec une seule ligne de code. Bilingue (français/anglais), personnalisable aux couleurs de chaque client, et propulsé par l'IA.
 
 ---
 
-## Comment ça marche
+## C'est quoi ce projet ?
 
-Le widget (`widget.js`) se charge sur n'importe quel site via une balise script. Il va chercher la config du restaurant sur mon serveur, puis envoie les messages à l'API Groq (modèle Llama 3.3). Tout ça sans que le client ait besoin de toucher à du code.
+Ce projet te permet de déployer un chatbot IA pour des restaurants (ou toute autre PME). Le chatbot répond automatiquement aux questions des clients — horaires, menu, réservations, allergènes — 24h/24, 7j/7.
+
+Chaque client a son propre fichier de configuration dans le dossier `clients/`. Tu peux gérer autant de clients que tu veux avec un seul serveur.
 
 ---
 
-## Lancer le projet en local
+## Comment l'installer localement
 
-Il faut **Node.js** installé.
+Assure-toi d'avoir **Node.js** installé, puis :
 
 ```bash
 npm install
 ```
 
-Crée un fichier `.env` à la racine :
+Crée un fichier `.env` à la racine avec ta clé API :
 
 ```
-GROQ_API_KEY=ta-clé-ici
+GROQ_API_KEY=ta-clé-groq-ici
 ```
 
-Puis lance le serveur :
+Lance le serveur de développement React :
+
+```bash
+npm start
+```
+
+Ou lance le serveur de production :
 
 ```bash
 npm run build
 node server.js
 ```
 
-Et ouvre `http://localhost:3001/test.html` dans ton navigateur.
+Ouvre ensuite `http://localhost:3001/test.html` pour voir le widget en action.
 
 ---
 
-## Ajouter un client
+## Ajouter un nouveau client
 
-Il suffit de créer un fichier JSON dans le dossier `clients/` avec les infos du restaurant (nom, couleurs, horaires, prompt système, etc.).
-
-Ensuite le client colle ça dans son site :
+1. Crée un fichier `clients/nom-du-resto.json` avec les infos du restaurant
+2. Donne cette ligne au client à coller dans son site :
 
 ```html
 <script src="https://mon-chatbot-production.up.railway.app/widget.js?client=nom-du-resto"></script>
 ```
 
-C'est vraiment tout.
+C'est tout !
 
 ---
 
-## Structure des fichiers
+## Structure du projet
 
 ```
 mon-chatbot/
-├── clients/        → un fichier JSON par restaurant
+├── clients/              → Fichiers de config de chaque client
 ├── public/
-│   ├── widget.js   → le widget qu'on intègre chez les clients
-│   └── test.html   → page de test en local
-├── src/            → interface React (pour tester l'IA directement)
-├── server.js       → serveur Express + routes API
-└── .env            → clés API (à ne jamais commiter)
+│   ├── widget.js         → Le widget flottant à intégrer chez les clients
+│   └── test.html         → Page de démo pour tester le widget
+├── src/                  → Code React (interface principale)
+├── server.js             → Serveur Express (proxy vers l'API Groq)
+└── .env                  → Clés API (ne jamais partager ce fichier)
 ```
 
 ---
 
 ## Déploiement
 
-Le projet tourne sur **Railway**. Un `git push` sur `main` et c'est redéployé automatiquement.
+Le projet est hébergé sur **Railway**. Chaque `git push` sur la branche `main` déclenche un redéploiement automatique.
 
-URL : `https://mon-chatbot-production.up.railway.app`
+```bash
+git add .
+git commit -m "Mise à jour"
+git push
+```
+
+URL de production : `https://mon-chatbot-production.up.railway.app`
 
 ---
 
-Fait à Montréal dans le cadre d'un projet perso pour apprendre le développement fullstack avec l'IA.
+## Variables d'environnement
+
+| Variable | Description |
+|---|---|
+| `GROQ_API_KEY` | Clé API Groq pour le modèle Llama |
+| `PORT` | Port du serveur (3001 par défaut) |
+
+---
+
+Fait avec ❤️ à Montréal
