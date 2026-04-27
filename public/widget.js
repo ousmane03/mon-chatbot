@@ -103,7 +103,8 @@
       "#bl-widget-send:disabled { background: rgba(255,255,255,0.05); color: #444; cursor: not-allowed; }",
       "#bl-widget-footer { text-align: center; font-size: 9px; color: #3a2010; margin-top: 6px; letter-spacing: 0.5px; }",
       "@media (max-width: 420px) {",
-      "  #bl-widget-window { width: calc(100vw - 24px); right: 12px; bottom: 90px; height: 70vh; }",
+      "  #bl-widget-window { width: calc(100vw - 24px); right: 12px; bottom: 80px; max-height: 60vh; }",
+      "  #bl-widget-messages { max-height: 60vh; }",
       "  #bl-widget-btn { right: 16px; bottom: 16px; }",
       "}"
     ].join("\n");
@@ -214,6 +215,12 @@
       sendBtn.disabled = !inputEl.value.trim();
       inputEl.style.height = "auto";
       inputEl.style.height = Math.min(inputEl.scrollHeight, 80) + "px";
+    });
+
+    inputEl.addEventListener("focus", function() {
+      if (window.innerWidth <= 420) {
+        setTimeout(function() { messagesEl.scrollTop = messagesEl.scrollHeight; }, 300);
+      }
     });
 
     inputEl.addEventListener("keydown", function(e) {
