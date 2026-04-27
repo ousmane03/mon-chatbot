@@ -102,6 +102,10 @@
       "}",
       "#bl-widget-send:disabled { background: rgba(255,255,255,0.05); color: #444; cursor: not-allowed; }",
       "#bl-widget-footer { text-align: center; font-size: 9px; color: #3a2010; margin-top: 6px; letter-spacing: 0.5px; }",
+      "#bl-suggestions { display: flex; flex-direction: column; gap: 6px; padding-bottom: 8px; }",
+      "#bl-suggestions.hidden { display: none; }",
+      ".bl-suggestion-btn { background: rgba(200,150,90,0.08); border: 1px solid rgba(200,150,90,0.35); border-radius: 20px; color: #d4a870; padding: 7px 14px; cursor: pointer; font-size: 12px; font-family: inherit; text-align: left; transition: background 0.15s; }",
+      ".bl-suggestion-btn:hover { background: rgba(200,150,90,0.18); }",
       "@media (max-width: 480px) {",
       "  #bl-widget-window { position: fixed !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; height: 100dvh !important; max-height: none !important; border-radius: 0 !important; bottom: auto !important; right: auto !important; }",
       "  #bl-widget-btn { right: 16px; bottom: 16px; }",
@@ -134,6 +138,11 @@
       '</div>' +
       '<div id="bl-widget-messages"></div>' +
       '<div id="bl-widget-input-area">' +
+        '<div id="bl-suggestions">' +
+          '<button class="bl-suggestion-btn">Quels sont vos horaires ?</button>' +
+          '<button class="bl-suggestion-btn">Comment r&eacute;server ?</button>' +
+          '<button class="bl-suggestion-btn">Voir le menu</button>' +
+        '</div>' +
         '<div id="bl-widget-input-row">' +
           '<textarea id="bl-widget-input" rows="1" placeholder="' + c.placeholder + '"></textarea>' +
           '<button id="bl-widget-send" disabled>&#x2191;</button>' +
@@ -147,6 +156,7 @@
     const messagesEl = document.getElementById("bl-widget-messages");
     const inputEl = document.getElementById("bl-widget-input");
     const sendBtn = document.getElementById("bl-widget-send");
+    const suggestionsEl = document.getElementById("bl-suggestions");
 
     function renderMessages() {
       messagesEl.innerHTML = "";
@@ -169,6 +179,7 @@
         typing.innerHTML = '<div class="bl-bubble bot"><div class="bl-typing"><div class="bl-dot"></div><div class="bl-dot"></div><div class="bl-dot"></div></div></div>';
         messagesEl.appendChild(typing);
       }
+      suggestionsEl.classList.toggle("hidden", messages.length >= 2);
       const lastMsg = messages[messages.length - 1];
       if (loading || !lastMsg || lastMsg.role === "user") {
         messagesEl.scrollTop = messagesEl.scrollHeight;
@@ -242,6 +253,13 @@
     });
 
     sendBtn.addEventListener("click", send);
+
+    document.querySelectorAll(".bl-suggestion-btn").forEach(function(sb) {
+      sb.addEventListener("click", function() {
+        inputEl.value = sb.textContent;
+        send();
+      });
+    });
 
     document.querySelectorAll(".bl-lang-btn").forEach(function(b) {
       b.addEventListener("click", function() {
