@@ -150,6 +150,7 @@
 
     if (window.visualViewport) {
       window.visualViewport.addEventListener("resize", function() {
+        if (window.innerWidth <= 480 && isOpen) return;
         if (window.innerWidth <= 420) {
           win.style.height = (window.visualViewport.height - 160) + "px";
           win.style.bottom = "80px";
@@ -224,6 +225,31 @@
       isOpen = !isOpen;
       win.classList.toggle("hidden", !isOpen);
       btn.innerHTML = isOpen ? "&#x2715;" : "&#x1F4AC;";
+      if (window.innerWidth <= 480) {
+        if (isOpen) {
+          win.style.position = "fixed";
+          win.style.top = "0";
+          win.style.left = "0";
+          win.style.width = "100vw";
+          win.style.height = "100vh";
+          win.style.bottom = "0";
+          win.style.right = "0";
+          win.style.borderRadius = "0";
+          win.style.zIndex = "999999";
+          btn.style.zIndex = "1000000";
+        } else {
+          win.style.position = "";
+          win.style.top = "";
+          win.style.left = "";
+          win.style.width = "";
+          win.style.height = "";
+          win.style.bottom = "";
+          win.style.right = "";
+          win.style.borderRadius = "";
+          win.style.zIndex = "";
+          btn.style.zIndex = "";
+        }
+      }
       if (isOpen) { renderMessages(); inputEl.focus(); }
     });
 
