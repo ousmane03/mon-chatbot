@@ -105,8 +105,7 @@
       "@media (max-width: 480px) {",
       "  #bl-widget-window { position: fixed !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; height: 100dvh !important; max-height: none !important; border-radius: 0 !important; bottom: auto !important; right: auto !important; }",
       "  #bl-widget-btn { right: 16px; bottom: 16px; }",
-      "  #bl-widget-header { position: relative; }",
-      "  #bl-widget-header #bl-widget-btn { position: absolute; top: 12px; right: 12px; width: 32px; height: 32px; font-size: 16px; box-shadow: none; bottom: auto; }",
+      "  body.bl-open #bl-widget-btn { bottom: 90px; right: 16px; width: 32px; height: 32px; font-size: 16px; box-shadow: none; }",
       "}"
     ].join("\n");
     document.head.appendChild(style);
@@ -210,12 +209,7 @@
       win.classList.toggle("hidden", !isOpen);
       btn.innerHTML = isOpen ? "&#x2715;" : "&#x1F4AC;";
       if (window.innerWidth <= 480) {
-        const headerEl = document.getElementById("bl-widget-header");
-        if (isOpen && headerEl) {
-          headerEl.appendChild(btn);
-        } else {
-          document.body.appendChild(btn);
-        }
+        document.body.classList.toggle("bl-open", isOpen);
       }
       if (isOpen) { renderMessages(); }
     });
