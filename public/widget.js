@@ -102,9 +102,8 @@
       "}",
       "#bl-widget-send:disabled { background: rgba(255,255,255,0.05); color: #444; cursor: not-allowed; }",
       "#bl-widget-footer { text-align: center; font-size: 9px; color: #3a2010; margin-top: 6px; letter-spacing: 0.5px; }",
-      "@media (max-width: 420px) {",
-      "  #bl-widget-window { width: calc(100vw - 24px); right: 12px; bottom: 80px; max-height: 60vh; }",
-      "  #bl-widget-messages { max-height: 60vh; }",
+      "@media (max-width: 480px) {",
+      "  #bl-widget-window { position: fixed !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; height: 100dvh !important; max-height: none !important; border-radius: 0 !important; bottom: auto !important; right: auto !important; }",
       "  #bl-widget-btn { right: 16px; bottom: 16px; }",
       "}"
     ].join("\n");
@@ -147,23 +146,6 @@
     const messagesEl = document.getElementById("bl-widget-messages");
     const inputEl = document.getElementById("bl-widget-input");
     const sendBtn = document.getElementById("bl-widget-send");
-
-    if (window.visualViewport) {
-      window.visualViewport.addEventListener("resize", function() {
-        if (window.innerWidth <= 480 && isOpen) return;
-        if (window.innerWidth <= 420) {
-          win.style.height = (window.visualViewport.height - 160) + "px";
-          win.style.bottom = "80px";
-          win.style.top = "auto";
-          win.style.overflow = "hidden";
-        } else {
-          win.style.height = "";
-          win.style.bottom = "";
-          win.style.top = "";
-          win.style.overflow = "";
-        }
-      });
-    }
 
     function renderMessages() {
       messagesEl.innerHTML = "";
@@ -225,31 +207,6 @@
       isOpen = !isOpen;
       win.classList.toggle("hidden", !isOpen);
       btn.innerHTML = isOpen ? "&#x2715;" : "&#x1F4AC;";
-      if (window.innerWidth <= 480) {
-        if (isOpen) {
-          win.style.position = "fixed";
-          win.style.top = "0";
-          win.style.left = "0";
-          win.style.width = "100vw";
-          win.style.height = "100vh";
-          win.style.bottom = "0";
-          win.style.right = "0";
-          win.style.borderRadius = "0";
-          win.style.zIndex = "999999";
-          btn.style.zIndex = "1000000";
-        } else {
-          win.style.position = "";
-          win.style.top = "";
-          win.style.left = "";
-          win.style.width = "";
-          win.style.height = "";
-          win.style.bottom = "";
-          win.style.right = "";
-          win.style.borderRadius = "";
-          win.style.zIndex = "";
-          btn.style.zIndex = "";
-        }
-      }
       if (isOpen) { renderMessages(); inputEl.focus(); }
     });
 
