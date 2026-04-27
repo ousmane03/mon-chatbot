@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bistro Lumière — Test Widget</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: Georgia, serif;
+      background: #f5f0e8;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .hero {
+      padding: 40px;
+    }
+    h1 {
+      font-size: 48px;
+      color: #2c1810;
+      margin-bottom: 12px;
+    }
+    p {
+      color: #8a6a50;
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+    .hint {
+      margin-top: 40px;
+      font-size: 13px;
+      color: #bbb;
+    }
+  </style>
+</head>
+<body>
+  <div class="hero">
+    <h1>🍽 Bistro Lumière</h1>
+    <p>Cuisine franco-méditerranéenne · Montréal</p>
+    <p>1247 Rue Saint-Denis · (514) 555-0192</p>
+    <div class="hint">👉 Clique sur l'icône en bas à droite pour tester le chatbot</div>
+  </div>
+
+<script src="widget.js?client=bistro-lumiere"></script>
+</body>
+</html>
