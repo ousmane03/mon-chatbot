@@ -89,7 +89,7 @@
       "}",
       "#bl-widget-input {",
       "  flex: 1; background: transparent; border: none; outline: none;",
-      "  color: #f5e6d0; font-size: 13px; font-family: 'Lora', Georgia, serif;",
+      "  color: #f5e6d0; font-size: 16px; font-family: 'Lora', Georgia, serif;",
       "  line-height: 1.5; resize: none; max-height: 80px; overflow-y: auto;",
       "}",
       "#bl-widget-input::placeholder { color: #6a4a30; }",
