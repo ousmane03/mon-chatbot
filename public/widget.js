@@ -176,7 +176,7 @@
         const botMsgs = messagesEl.querySelectorAll(".bl-msg.bot");
         const lastBot = botMsgs[botMsgs.length - 1];
         if (lastBot) {
-          lastBot.scrollIntoView({ behavior: "smooth", block: "start" });
+          messagesEl.scrollTo({ top: lastBot.offsetTop, behavior: "smooth" });
         } else {
           messagesEl.scrollTop = messagesEl.scrollHeight;
         }
