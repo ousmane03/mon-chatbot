@@ -169,7 +169,18 @@
         typing.innerHTML = '<div class="bl-bubble bot"><div class="bl-typing"><div class="bl-dot"></div><div class="bl-dot"></div><div class="bl-dot"></div></div></div>';
         messagesEl.appendChild(typing);
       }
-      messagesEl.scrollTop = messagesEl.scrollHeight;
+      const lastMsg = messages[messages.length - 1];
+      if (loading || !lastMsg || lastMsg.role === "user") {
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+      } else {
+        const botMsgs = messagesEl.querySelectorAll(".bl-msg.bot");
+        const lastBot = botMsgs[botMsgs.length - 1];
+        if (lastBot) {
+          lastBot.scrollIntoView({ behavior: "smooth", block: "start" });
+        } else {
+          messagesEl.scrollTop = messagesEl.scrollHeight;
+        }
+      }
     }
 
     async function send() {
