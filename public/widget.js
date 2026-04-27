@@ -182,7 +182,7 @@
       renderMessages();
 
       try {
-        const res = await fetch("/api/chat", {
+        const res = await fetch("https://mon-chatbot-production.up.railway.app/api/chat", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -237,7 +237,7 @@
 
   async function init() {
     try {
-      const res = await fetch("/api/config/" + clientId);
+      const res = await fetch("https://mon-chatbot-production.up.railway.app/api/config/" + clientId);
       if (!res.ok) throw new Error('Client "' + clientId + '" introuvable');
       const config = await res.json();
       injectStyles(config);
