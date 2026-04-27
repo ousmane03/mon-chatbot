@@ -207,7 +207,7 @@
       isOpen = !isOpen;
       win.classList.toggle("hidden", !isOpen);
       btn.innerHTML = isOpen ? "&#x2715;" : "&#x1F4AC;";
-      if (isOpen) { renderMessages(); inputEl.focus(); }
+      if (isOpen) { renderMessages(); }
     });
 
     inputEl.addEventListener("input", function() {
