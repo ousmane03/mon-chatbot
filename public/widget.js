@@ -151,11 +151,15 @@
     if (window.visualViewport) {
       window.visualViewport.addEventListener("resize", function() {
         if (window.innerWidth <= 420) {
-          win.style.height = (window.visualViewport.height - 100) + "px";
+          win.style.height = (window.visualViewport.height - 160) + "px";
           win.style.bottom = "80px";
+          win.style.top = "auto";
+          win.style.overflow = "hidden";
         } else {
           win.style.height = "";
           win.style.bottom = "";
+          win.style.top = "";
+          win.style.overflow = "";
         }
       });
     }
