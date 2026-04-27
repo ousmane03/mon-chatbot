@@ -148,6 +148,18 @@
     const inputEl = document.getElementById("bl-widget-input");
     const sendBtn = document.getElementById("bl-widget-send");
 
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener("resize", function() {
+        if (window.innerWidth <= 420) {
+          win.style.height = (window.visualViewport.height - 100) + "px";
+          win.style.bottom = "80px";
+        } else {
+          win.style.height = "";
+          win.style.bottom = "";
+        }
+      });
+    }
+
     function renderMessages() {
       messagesEl.innerHTML = "";
       if (messages.length === 0) {
