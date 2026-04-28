@@ -203,6 +203,7 @@
       messages.push({ role: "user", content: text });
       loading = true;
       renderMessages();
+      if (typeof gtag !== "undefined") { gtag("event", "message_sent", { event_category: "chatbot", event_label: clientId }); }
 
       try {
         const res = await fetch("https://mon-chatbot-production.up.railway.app/api/chat", {
@@ -218,6 +219,7 @@
           ? data.content.find(function(b) { return b.type === "text"; }).text
           : "Desole, une erreur s'est produite.";
         messages.push({ role: "assistant", content: reply });
+        if (typeof gtag !== "undefined") { gtag("event", "bot_response", { event_category: "chatbot", event_label: clientId }); }
       } catch (e) {
         messages.push({ role: "assistant", content: "Desole, je ne suis pas disponible pour le moment." });
       }
@@ -238,7 +240,10 @@
           document.body.appendChild(btn);
         }
       }
-      if (isOpen) { renderMessages(); }
+      if (isOpen) {
+        if (typeof gtag !== "undefined") { gtag("event", "widget_opened", { event_category: "chatbot", event_label: clientId }); }
+        renderMessages();
+      }
     });
 
     inputEl.addEventListener("input", function() {
