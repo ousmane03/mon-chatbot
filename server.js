@@ -26,6 +26,14 @@ app.get("/api/config/:clientId", (req, res) => {
   res.json(publicConfig);
 });
 
+function detectLang(text) {
+  const enWords = /\b(what|how|where|when|who|why|is|are|can|do|does|the|a|an|your|you|i|my|we|have|has|will|would|could|tell|show|want|need|help|hi|hello|hey|good|please|menu|open|closed|book|reservation|address|phone|specialty|speciality)\b/i;
+  const frWords = /\b(quels?|comment|où|quand|qui|pourquoi|est|sont|peux|pouvez|du|de|la|le|les|un|une|votre|vous|je|mon|nous|avez|sera|dire|montrer|veux|besoin|aide|bonjour|salut|bonsoir|merci|bien|ouvert|fermé|réserver|adresse|téléphone|spécialité)\b/i;
+  const enScore = (text.match(enWords) || []).length;
+  const frScore = (text.match(frWords) || []).length;
+  return enScore > frScore ? "en" : "fr";
+}
+
 app.post("/api/chat", async (req, res) => {
   try {
     const { messages, clientId } = req.body;
@@ -33,8 +41,14 @@ app.post("/api/chat", async (req, res) => {
     const client = loadClient(clientId);
     if (!client) return res.status(404).json({ error: "Client introuvable" });
 
+    const lastUserMsg = [...messages].reverse().find(m => m.role === "user");
+    const lang = lastUserMsg ? detectLang(lastUserMsg.content) : "fr";
+    const langNote = lang === "en"
+      ? "CRITICAL: The user wrote in English. You MUST respond in English only. Do not use any French words."
+      : "CRITIQUE : L'utilisateur écrit en français. Tu DOIS répondre en français uniquement. N'utilise aucun mot anglais.";
+
     const groqMessages = [
-      { role: "system", content: client.systemPrompt },
+      { role: "system", content: client.systemPrompt + "\n\n" + langNote },
       ...messages.map(m => ({ role: m.role, content: m.content }))
     ];
 
